@@ -36,29 +36,30 @@
         lineWrapping: true,
         mode: "markdown"
       });
-//      检测改变重新渲染
+      //检测改变重新渲染
       this.editor.on('change', _.debounce(() => {
         this.renderPreview();
       }, 200));
-//      编辑器滚动时触发滚动同步
+      //编辑器滚动时触发滚动同步
       this.editor.on('scroll', _.debounce(() => {
-        console.log("scroll");
-        sync_scroll.syncPreviewByEditor(this.editor, this.previewHTML);
+        //console.log(this.editor.getScrollInfo().top);
+        //console.log(sync_scroll.getEditorScroll(this.editor));
+        sync_scroll.syncPreviewByEditor(sync_scroll.getEditorScroll(this.editor));
       }, 200));
-//      预览滚动时触发同步
+      //预览滚动时触发同步
       $("#preview").scroll(_.debounce(() => {
-        console.log("preview html: " + "nope");
+        // nope
       }, 200));
       this.renderPreview();
     },
     methods: {
       renderPreview() {
         let md = markdownIt().use(markdownItSourceMap);
-//        document.getElementById("editor").innerHTML = md.render(this.editor.getValue());
-//        console.log(md.render(this.editor.getValue()));
         this.previewHTML = md.render(this.editor.getValue());
       }
     }
+
+    
 
   }
 </script>
